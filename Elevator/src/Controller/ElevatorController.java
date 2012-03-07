@@ -123,7 +123,7 @@ public class ElevatorController implements ActionListener, Runnable {
 			}
 		}else{
 			/*
-			 * normal command
+			 * normal command eller?
 			 */
 			requestedFloor = Double.parseDouble(commandArray[2]);
 			monitor.setTask(requestedFloor);	

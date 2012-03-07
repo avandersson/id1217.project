@@ -20,7 +20,8 @@ public class MainController extends Thread implements ActionListener{
     Monitora[] monitor;// = new Monitora[MakeAll.getNumberOfElevators()];
     Elevators elevators;
     String rmihost, action[] = new String[3];
-    int elevatorNumber, requestedFloor;
+    int elevatorNumber; 
+    double requestedFloor;
     
     public MainController(Monitora monitor[]){
     	this.monitor = monitor;
@@ -32,11 +33,11 @@ public class MainController extends Thread implements ActionListener{
 			
 			MakeAll.init("localhost");
 			MakeAll.addFloorListener(this);
-		    MakeAll.addInsideListener(this);
-		    MakeAll.addPositionListener(this);
+//		    MakeAll.addInsideListener(this);
+//		    MakeAll.addPositionListener(this);
 		    MakeAll.addVelocityListener(this);		    
 //		    Elevator elevator = MakeAll.getElevator(1);
-		    Elevators eles = MakeAll.getElevators();
+//		    Elevators eles = MakeAll.getElevators();
 /*		    motor = MakeAll.getMotor(1);
 		    scale = MakeAll.getScale(1);
 		    door = MakeAll.getDoor(1);
@@ -89,18 +90,14 @@ public void actionPerformed(ActionEvent e) {
 	action = e.getActionCommand().split(" ");
 	elevatorNumber = Integer.parseInt(action[1]);
 	
-	if(action[0].equals("p")){
-		/*
-		 * Elevator button pressed
-		 */
-		requestedFloor = Integer.parseInt(action[2]);
-		monitor[elevatorNumber].setTask(action[0], requestedFloor);
+/*	if(action[0].equals("p")){
+		
+		requestedFloor = Double.parseDouble(action[2]);
+		monitor[elevatorNumber].setTask(requestedFloor);
 		
 	}
 	if(action[0].equals("b")){
-		/*
-		 * Floor button pressed
-		 */
+		
 	}
 	
 	if(e.getActionCommand().equals("p 1 5")){
@@ -110,9 +107,8 @@ public void actionPerformed(ActionEvent e) {
 			e1.printStackTrace();
 		}
 	}
-
-	System.out.println("hej");
-	System.out.println("command=" + e.getActionCommand());
+*/
+	System.out.println("M command=" + e.getActionCommand());
 	return;
 	
 }

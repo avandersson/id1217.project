@@ -26,13 +26,15 @@ public class ElevatorController implements ActionListener, Runnable {
 			MakeAll.addInsideListener(id, this);
 
 			while(true){
+				
 				list = monitor.getTasks(destinationFloor);
 
 				destinationFloor = list.get(0);
 
 
-				if(monitor.getStoppedOnFloor() == destinationFloor);
+				if(monitor.getStoppedOnFloor() == destinationFloor){}
 				else if(elevator.whereIs() < list.get(0)){	
+					System.out.println("Elevator " + id + " moving up!");
 					elevator.up();
 					do {
 						elevator.up();
@@ -58,6 +60,7 @@ public class ElevatorController implements ActionListener, Runnable {
 					stopButtonPressed = false;
 
 				}else{
+					System.out.println("Elevator " + id + " moving down!");
 					elevator.down();
 					do {
 						elevator.down();
@@ -105,18 +108,22 @@ public class ElevatorController implements ActionListener, Runnable {
 		String commandArray[]  = new String[3];
 		commandArray = command.split(" ");
 
-		requestedFloor = Double.parseDouble(commandArray[2]);
-		monitor.setTask(requestedFloor);
+		
 
 		if(Integer.parseInt(commandArray[1]) == id && Double.parseDouble(commandArray[2]) == 32000){
 			try {
+				System.out.println("Elevator " + id + " stopped!");
 				elevator.stop();
 				stopButtonPressed = true;
+				list.clear();
 				monitor.clearList();
 
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}
+		}else{
+			requestedFloor = Double.parseDouble(commandArray[2]);
+			monitor.setTask(requestedFloor);	
 		}
 
 	}

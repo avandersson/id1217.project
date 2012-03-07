@@ -122,6 +122,9 @@ public class ElevatorController implements ActionListener, Runnable {
 				e1.printStackTrace();
 			}
 		}else{
+			/*
+			 * normal command
+			 */
 			requestedFloor = Double.parseDouble(commandArray[2]);
 			monitor.setTask(requestedFloor);	
 		}

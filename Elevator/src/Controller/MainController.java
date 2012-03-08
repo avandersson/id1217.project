@@ -21,6 +21,7 @@ public class MainController extends Thread implements ActionListener {
 	Elevators elevators;
 	String rmihost, action[] = new String[3];
 	int elevatorNumber;
+	int numOfElevators;
 	double requestedFloor;
 
 	public MainController(Monitora monitor[]) {
@@ -33,6 +34,8 @@ public class MainController extends Thread implements ActionListener {
 			MakeAll.init("localhost");
 			MakeAll.addFloorListener(this);
 			MakeAll.addVelocityListener(this);
+			numOfElevators = MakeAll.getNumberOfElevators();
+			elevators = MakeAll.getElevators();
 
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -62,8 +65,137 @@ public class MainController extends Thread implements ActionListener {
 
 		action = e.getActionCommand().split(" ");
 		elevatorNumber = Integer.parseInt(action[1]);
+		int upDown = Integer.parseInt(action[2]);
+		int floor = Integer.parseInt(action[1]);
+		int closeUpFloor = floor + 1;
+		int closeDownFloor = floor - 1;
+		boolean done = false;
 
 		System.out.println("M command=" + e.getActionCommand());
+		try {
+			if (upDown == 1) {
+				/*
+				 * up action requested
+				 */
+
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					if (monitor[i].getStoppedOnFloor() == floor) {
+						/*
+						 * this elevator is stationary on this floor, choose
+						 * this one
+						 */
+						monitor[i].setTask(floor);
+						done = true;
+					}
+				}
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					/*
+					 * find a elevator on close floor that's going in the right direction
+					 */
+					if (monitor[i].getDirection() == 1
+							&& elevators.whereIs(i) < floor
+							&& elevators.whereIs(i) > closeDownFloor) {
+						monitor[i].setTask(floor);
+						done = true;
+					}
+				}
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					/*
+					 * finds stationary elevator on above or below floor
+					 */
+					if (monitor[i].getStoppedOnFloor() == floor - 1 || monitor[i].getStoppedOnFloor() == floor + 1) {
+						monitor[i].setTask(floor);
+						done = true;
+					}
+					
+				}
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					/*
+					 * find a elevator floor that's going in the right direction
+					 */
+					if (monitor[i].getDirection() == 1
+							&& elevators.whereIs(i) < floor) {
+						monitor[i].setTask(floor);
+						done = true;
+					}
+				}
+				if (!done) {
+					int smallestListSize = monitor[1].getSizeOfListOfTasks();
+					int index = 1;
+					for (int i = 2; i < numOfElevators + 1 && !done; i++) {
+						if (monitor[i].getSizeOfListOfTasks() < smallestListSize) {
+							smallestListSize = monitor[i].getSizeOfListOfTasks();
+							index = i;
+						}
+					}
+					monitor[index].setTask(floor);
+					done = true;
+				}
+			
+			} else {
+				/*
+				 * down action requested
+				 */
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					if (monitor[i].getStoppedOnFloor() == floor) {
+						/*
+						 * this elevator is stationary on this floor, choose
+						 * this one
+						 */
+						monitor[i].setTask(floor);
+						done = true;
+					}
+				}
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					/*
+					 * find a elevator on close floor that's going in the right direction
+					 */
+					if (monitor[i].getDirection() == -1
+							&& elevators.whereIs(i) > floor
+							&& elevators.whereIs(i) < closeUpFloor) {
+						monitor[i].setTask(floor);
+						done = true;
+					}
+				}
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					/*
+					 * finds stationary elevator on above or below floor
+					 */
+					if (monitor[i].getStoppedOnFloor() == floor - 1 || monitor[i].getStoppedOnFloor() == floor + 1) {
+						monitor[i].setTask(floor);
+						done = true;
+					}
+					
+				}
+				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
+					/*
+					 * find a elevator floor that's going in the right direction
+					 */
+					if (monitor[i].getDirection() == -1
+							&& elevators.whereIs(i) > floor) {
+						monitor[i].setTask(floor);
+						done = true;
+					}
+				}
+				if (!done) {
+					int smallestListSize = monitor[1].getSizeOfListOfTasks();
+					int index = 1;
+					for (int i = 2; i < numOfElevators + 1 && !done; i++) {
+						if (monitor[i].getSizeOfListOfTasks() < smallestListSize) {
+							smallestListSize = monitor[i].getSizeOfListOfTasks();
+							index = i;
+						}
+					}
+					monitor[index].setTask(floor);
+					done = true;
+				}
+
+			}
+		} catch (RemoteException e2) {
+			e2.printStackTrace();
+
+		}
+
 		return;
 
 	}

@@ -31,16 +31,16 @@ public class ElevatorController implements ActionListener, Runnable {
 
 				destinationFloor = list.get(0);
 
-
-				if((int)monitor.getStoppedOnFloor() == (int)destinationFloor){
-					/*
-					 * do nothing
-					 */
-					
+				if (destinationFloor == 31000.0) {
+					elevator.open();
+					Thread.sleep(2000);
+					elevator.close();
+					Thread.sleep(1500);
+					monitor.removeTask(list.get(0));
 				}
 				else if(elevator.whereIs() < destinationFloor){	
 					System.out.println("Elevator " + id + " moving up!");
-					do {
+					while (elevator.whereIs() < destinationFloor - 0.001 && !monitor.isStopButtonPressed()){
 						elevator.up();
 						monitor.setDirection(1);
 						/*
@@ -48,7 +48,7 @@ public class ElevatorController implements ActionListener, Runnable {
 						 */
 						int where = (int) (elevator.whereIs() + 0.1);
 						elevator.setScalePosition(where);
-						Thread.sleep(100);
+						Thread.sleep(10);
 						list = monitor.getTasks((int)destinationFloor);
 
 						for(int i = 1; i < list.size(); i++){
@@ -58,28 +58,28 @@ public class ElevatorController implements ActionListener, Runnable {
 							}
 						}
 
-					} while (elevator.whereIs() < destinationFloor && !monitor.isStopButtonPressed());
+					}
 					int where = (int) (elevator.whereIs() + 0.1);
 					elevator.setScalePosition(where);
 					//monitor.setStoppedOnFloor((int)elevator.whereIs());
 					if(!monitor.isStopButtonPressed()){
-						monitor.removeTask(list.get(0));
 						elevator.stop();
 						elevator.open();
 						Thread.sleep(2000);
 						elevator.close();
 						Thread.sleep(1500);
+						monitor.removeTask(list.get(0));
 					}
 					monitor.setStopButtonPressed(false);
 
 				}else{
 					System.out.println("Elevator " + id + " moving down!");
-					do {
+					 while (elevator.whereIs() > destinationFloor + 0.001 && !monitor.isStopButtonPressed()){
 						elevator.down();
 						monitor.setDirection(-1);
 						int where = (int) (elevator.whereIs() + 0.1);
 						elevator.setScalePosition(where);
-						Thread.sleep(100);
+						Thread.sleep(10);
 
 						list = monitor.getTasks((int)destinationFloor);
 
@@ -90,17 +90,17 @@ public class ElevatorController implements ActionListener, Runnable {
 							}
 						}
 
-					} while (elevator.whereIs() > destinationFloor && !monitor.isStopButtonPressed());
+					}
 					int where = (int) (elevator.whereIs() + 0.1);
 					elevator.setScalePosition(where);
 					//monitor.setStoppedOnFloor((int)elevator.whereIs());
 					if(!monitor.isStopButtonPressed()){
-						monitor.removeTask(list.get(0));
 						elevator.stop();
 						elevator.open();
 						Thread.sleep(2000);
 						elevator.close();
 						Thread.sleep(1500);
+						monitor.removeTask(list.get(0));
 					}
 					monitor.setStopButtonPressed(false);
 				}

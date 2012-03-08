@@ -7,34 +7,46 @@ public class Monitora {
 	ArrayList<Double> listOfTasks = new ArrayList<Double>();
 	//String listOfTasks[] = new String[5];
 	private int direction = 0; 
-	private double stoppedOnFloor = 0;
+	private int stoppedOnFloor = 0;
+	private boolean stopButtonPressed = false;
+	
 
 	public synchronized void setTask(double number){
 
-		/*		if(command.equals("p")){
-			/*
+		/*
 		 * Elevator button pressed
 		 */
 		if(!listOfTasks.contains((double) number)){
-			listOfTasks.add(number);
+			if (stoppedOnFloor == (int)number) {
+				/*
+				 * already at this floor, do nothing
+				 */
+			}else{
+				listOfTasks.add(number);	
+				notify();
+
+			}
+			
 		}
 
-		notify();
 
-		//}
 
 	}
 
 
-	public synchronized ArrayList<Double> getTasks(double stopedOnFloor){
+	public synchronized ArrayList<Double> getTasks(int stopedOnFloor){
 		if(listOfTasks.size() == 0){
 			try {
-				this.setStoppedOnFloor(stopedOnFloor);
+				if (!stopButtonPressed) {
+					this.setStoppedOnFloor(stopedOnFloor);
+					direction = 0;
+				}
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}else{
+			stopButtonPressed = false;
 			this.setStoppedOnFloor(-1);
 		}
 		return listOfTasks;
@@ -60,12 +72,12 @@ public class Monitora {
 	}
 
 
-	public double getStoppedOnFloor() {
+	public int getStoppedOnFloor() {
 		return stoppedOnFloor;
 	}
 
 
-	public void setStoppedOnFloor(double stoppedOnFloor) {
+	public void setStoppedOnFloor(int stoppedOnFloor) {
 		this.stoppedOnFloor = stoppedOnFloor;
 	}
 
@@ -74,6 +86,16 @@ public class Monitora {
 		
 		listOfTasks.clear();
 		
+	}
+
+
+	public void setStopButtonPressed(boolean stopButtonPressed) {
+		this.stopButtonPressed = stopButtonPressed;
+	}
+
+
+	public boolean isStopButtonPressed() {
+		return stopButtonPressed;
 	}
 
 }

@@ -108,9 +108,10 @@ public class ElevatorController implements ActionListener, Runnable {
 		String commandArray[]  = new String[3];
 		commandArray = command.split(" ");
 
-		
-
 		if(Integer.parseInt(commandArray[1]) == id && Double.parseDouble(commandArray[2]) == 32000){
+			/*
+			 * stop command. stop and clear the task list. 
+			 */
 			try {
 				System.out.println("Elevator " + id + " stopped!");
 				elevator.stop();
@@ -123,7 +124,7 @@ public class ElevatorController implements ActionListener, Runnable {
 			}
 		}else{
 			/*
-			 * normal command eller?
+			 * normal command, send to task list.
 			 */
 			requestedFloor = Double.parseDouble(commandArray[2]);
 			monitor.setTask(requestedFloor);	

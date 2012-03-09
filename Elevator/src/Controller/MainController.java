@@ -105,7 +105,8 @@ public class MainController extends Thread implements ActionListener {
 					 */
 					if (monitor[i].getDirection() == 1
 							&& elevators.whereIs(i) < floor
-							&& elevators.whereIs(i) > closeDownFloor) {
+							&& elevators.whereIs(i) > closeDownFloor
+							&& monitor[i].list.get(0).getDirection() != -1) {
 						monitor[i].setTask(task);
 						done = true;
 					}
@@ -114,7 +115,8 @@ public class MainController extends Thread implements ActionListener {
 					/*
 					 * finds stationary elevator on above or below floor
 					 */
-					if (monitor[i].getStoppedOnFloor() == floor - 1 || monitor[i].getStoppedOnFloor() == floor + 1) {
+					if ((task.getFloor() != 0 && monitor[i].getStoppedOnFloor() == floor - 1) || 
+							(task.getFloor() != MakeAll.getNumberOfFloors() && monitor[i].getStoppedOnFloor() == floor + 1)) {
 						monitor[i].setTask(task);
 						done = true;
 					}
@@ -125,7 +127,8 @@ public class MainController extends Thread implements ActionListener {
 					 * find a elevator floor that's going in the right direction
 					 */
 					if (monitor[i].getDirection() == 1
-							&& elevators.whereIs(i) < floor) {
+							&& elevators.whereIs(i) < floor
+							&& monitor[i].list.get(0).getDirection() != -1) {
 						monitor[i].setTask(task);
 						done = true;
 					}
@@ -163,7 +166,8 @@ public class MainController extends Thread implements ActionListener {
 					 */
 					if (monitor[i].getDirection() == -1
 							&& elevators.whereIs(i) > floor
-							&& elevators.whereIs(i) < closeUpFloor) {
+							&& elevators.whereIs(i) < closeUpFloor
+							&& monitor[i].list.get(0).getDirection() != 1) {
 						monitor[i].setTask(task);
 						done = true;
 					}
@@ -172,7 +176,8 @@ public class MainController extends Thread implements ActionListener {
 					/*
 					 * finds stationary elevator on above or below floor
 					 */
-					if (monitor[i].getStoppedOnFloor() == floor - 1 || monitor[i].getStoppedOnFloor() == floor + 1) {
+					if ((task.getFloor() != 0 &&  monitor[i].getStoppedOnFloor() == floor - 1) || 
+							(task.getFloor() != MakeAll.getNumberOfFloors() && monitor[i].getStoppedOnFloor() == floor + 1)) {
 						monitor[i].setTask(task);
 						done = true;
 					}
@@ -183,7 +188,8 @@ public class MainController extends Thread implements ActionListener {
 					 * find a elevator floor that's going in the right direction
 					 */
 					if (monitor[i].getDirection() == -1
-							&& elevators.whereIs(i) > floor) {
+							&& elevators.whereIs(i) > floor
+							&& monitor[i].list.get(0).getDirection() != 1) {
 						monitor[i].setTask(task);
 						done = true;
 					}
@@ -205,6 +211,12 @@ public class MainController extends Thread implements ActionListener {
 		} catch (RemoteException e2) {
 			e2.printStackTrace();
 
+		} catch (MalformedURLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (NotBoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
 
 		return;

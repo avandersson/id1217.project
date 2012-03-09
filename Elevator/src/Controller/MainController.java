@@ -33,7 +33,6 @@ public class MainController extends Thread implements ActionListener {
 
 			MakeAll.init("localhost");
 			MakeAll.addFloorListener(this);
-			MakeAll.addVelocityListener(this);
 			numOfElevators = MakeAll.getNumberOfElevators();
 			elevators = MakeAll.getElevators();
 
@@ -48,12 +47,13 @@ public class MainController extends Thread implements ActionListener {
 	}
 
 	public static void main(String[] args) throws RemoteException,
-			MalformedURLException, NotBoundException {
+			MalformedURLException, NotBoundException, InterruptedException {
 
 		Monitora[] monitorList = new Monitora[MakeAll.getNumberOfElevators() + 1];
 		for (int i = 1; i < MakeAll.getNumberOfElevators() + 1; i++) {
 			monitorList[i] = new Monitora();
 			new Thread(new ElevatorController(monitorList[i], i)).start();
+			Thread.sleep(10);
 		}
 
 		new Thread(new MainController(monitorList)).start();
@@ -74,11 +74,21 @@ public class MainController extends Thread implements ActionListener {
 
 		System.out.println("M command=" + e.getActionCommand());
 		try {
+			
+			for (int i = 1; i < numOfElevators +1; i++) {
+				
+				if(task.existsIn(monitor[i].list)){
+					done = true;
+				}
+				
+			}
+			
 			if (direction == 1) {
 				/*
 				 * up action requested
 				 */
 
+				
 				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
 					if (monitor[i].getStoppedOnFloor() == floor) {
 						/*

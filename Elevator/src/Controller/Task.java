@@ -22,7 +22,9 @@ public class Task {
 
 
 	/**
-	 * @return command The command of this task
+	 * Gets the command of this task
+	 * 
+	 * @return String command 
 	 */
 
 	public String getCommand() {
@@ -30,18 +32,29 @@ public class Task {
 	}
 
 	/**
-	 * @return floor The floor requested by this task
+	 * Gets the floor requested by this task
+	 * 
+	 * @return int floor 
 	 */
 	public int getFloor() {
 		return floor;
 	}
 
 	/**
-	 * @return direction The direction of this task
+	 * The direction of this task
+	 * 
+	 * @return int Direction 
 	 */
 	public int getDirection() {
 		return direction;
 	}
+	
+	/**
+	 * True if the task already exists in the list given
+	 * 
+	 * @param ArrayList<Task> The ArrayList to search through
+	 * @return boolean
+	 */
 
 	public boolean existsIn(ArrayList<Task> list) {
 

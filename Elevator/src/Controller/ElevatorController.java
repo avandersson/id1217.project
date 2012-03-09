@@ -121,7 +121,7 @@ public class ElevatorController implements ActionListener, Runnable {
 
 	@Override
 	public void actionPerformed(ActionEvent e2) {
-
+		
 		String command = e2.getActionCommand();
 		String commandArray[]  = new String[3];
 		commandArray = command.split(" ");

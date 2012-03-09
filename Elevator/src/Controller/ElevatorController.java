@@ -10,7 +10,7 @@ import elevator.rmi.*;
 public class ElevatorController implements ActionListener, Runnable {
 	Monitora monitor;
 	Elevator elevator;
-	ArrayList<Double> list = new ArrayList<Double>();
+	ArrayList<Task> list = new ArrayList<Task>();
 	int id;
 	double destinationFloor = 0, requestedFloor;
 //	boolean stopButtonPressed = false;
@@ -29,7 +29,7 @@ public class ElevatorController implements ActionListener, Runnable {
 				
 				list = monitor.getTasks((int)destinationFloor);
 
-				destinationFloor = list.get(0);
+				destinationFloor = list.get(0).getFloor();
 
 				if (destinationFloor == 31000.0) {
 					elevator.open();
@@ -52,8 +52,8 @@ public class ElevatorController implements ActionListener, Runnable {
 						list = monitor.getTasks((int)destinationFloor);
 
 						for(int i = 1; i < list.size(); i++){
-							if(list.get(i)  > elevator.whereIs() && list.get(i) < destinationFloor){
-								destinationFloor = list.get(i);
+							if(list.get(i).getFloor()  > elevator.whereIs() && list.get(i).getFloor() < destinationFloor){
+								destinationFloor = list.get(i).getFloor();
 								list = monitor.addTaskFirst(list.get(i), i);
 							}
 						}
@@ -84,8 +84,8 @@ public class ElevatorController implements ActionListener, Runnable {
 						list = monitor.getTasks((int)destinationFloor);
 
 						for(int i = 1; i < list.size(); i++){
-							if(list.get(i)  < elevator.whereIs() && list.get(i) > destinationFloor){
-								destinationFloor = list.get(i);
+							if(list.get(i).getFloor()  < elevator.whereIs() && list.get(i).getFloor() > destinationFloor){
+								destinationFloor = list.get(i).getFloor();
 								list = monitor.addTaskFirst(list.get(i), i);
 							}
 						}
@@ -125,6 +125,10 @@ public class ElevatorController implements ActionListener, Runnable {
 		String command = e2.getActionCommand();
 		String commandArray[]  = new String[3];
 		commandArray = command.split(" ");
+		/*
+		 * Parameter three sets the direction, panel buttons got no direction
+		 */
+		Task task = new Task(commandArray[0], Integer.parseInt(commandArray[2]), 0);
 
 		if(Integer.parseInt(commandArray[1]) == id && Double.parseDouble(commandArray[2]) == 32000){
 			/*
@@ -148,7 +152,7 @@ public class ElevatorController implements ActionListener, Runnable {
 			 * normal command, send to task list.
 			 */
 			requestedFloor = Double.parseDouble(commandArray[2]);
-			monitor.setTask(requestedFloor);	
+			monitor.setTask(task);	
 		}
 
 	}

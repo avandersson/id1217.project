@@ -65,15 +65,16 @@ public class MainController extends Thread implements ActionListener {
 
 		action = e.getActionCommand().split(" ");
 		elevatorNumber = Integer.parseInt(action[1]);
-		int upDown = Integer.parseInt(action[2]);
+		int direction = Integer.parseInt(action[2]);
 		int floor = Integer.parseInt(action[1]);
 		int closeUpFloor = floor + 1;
 		int closeDownFloor = floor - 1;
 		boolean done = false;
+		Task task = new Task(action[0], floor, direction);
 
 		System.out.println("M command=" + e.getActionCommand());
 		try {
-			if (upDown == 1) {
+			if (direction == 1) {
 				/*
 				 * up action requested
 				 */
@@ -84,7 +85,7 @@ public class MainController extends Thread implements ActionListener {
 						 * this elevator is stationary on this floor, choose
 						 * this one
 						 */
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 				}
@@ -95,7 +96,7 @@ public class MainController extends Thread implements ActionListener {
 					if (monitor[i].getDirection() == 1
 							&& elevators.whereIs(i) < floor
 							&& elevators.whereIs(i) > closeDownFloor) {
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 				}
@@ -104,7 +105,7 @@ public class MainController extends Thread implements ActionListener {
 					 * finds stationary elevator on above or below floor
 					 */
 					if (monitor[i].getStoppedOnFloor() == floor - 1 || monitor[i].getStoppedOnFloor() == floor + 1) {
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 					
@@ -115,7 +116,7 @@ public class MainController extends Thread implements ActionListener {
 					 */
 					if (monitor[i].getDirection() == 1
 							&& elevators.whereIs(i) < floor) {
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 				}
@@ -128,7 +129,7 @@ public class MainController extends Thread implements ActionListener {
 							index = i;
 						}
 					}
-					monitor[index].setTask(floor);
+					monitor[index].setTask(task);
 					done = true;
 				}
 			
@@ -142,7 +143,7 @@ public class MainController extends Thread implements ActionListener {
 						 * this elevator is stationary on this floor, choose
 						 * this one
 						 */
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 				}
@@ -153,7 +154,7 @@ public class MainController extends Thread implements ActionListener {
 					if (monitor[i].getDirection() == -1
 							&& elevators.whereIs(i) > floor
 							&& elevators.whereIs(i) < closeUpFloor) {
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 				}
@@ -162,7 +163,7 @@ public class MainController extends Thread implements ActionListener {
 					 * finds stationary elevator on above or below floor
 					 */
 					if (monitor[i].getStoppedOnFloor() == floor - 1 || monitor[i].getStoppedOnFloor() == floor + 1) {
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 					
@@ -173,7 +174,7 @@ public class MainController extends Thread implements ActionListener {
 					 */
 					if (monitor[i].getDirection() == -1
 							&& elevators.whereIs(i) > floor) {
-						monitor[i].setTask(floor);
+						monitor[i].setTask(task);
 						done = true;
 					}
 				}
@@ -186,7 +187,7 @@ public class MainController extends Thread implements ActionListener {
 							index = i;
 						}
 					}
-					monitor[index].setTask(floor);
+					monitor[index].setTask(task);
 					done = true;
 				}
 

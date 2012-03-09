@@ -125,22 +125,28 @@ public class Monitora {
 	}
 	
 	/**
+	 * Sets the direction of this elevator
+	 * -1 = down
+	 * 0 = no direction
+	 * 1 = up
 	 * 
-	 * @param direction
+	 * @param int direction
 	 */
 	public synchronized void setDirection(int direction) {
 		this.direction = direction;
 	}
 
 	/**
+	 * Gets the floor where the elevator is stopped
 	 * 
-	 * @return
+	 * @return -1 if the elevator is moving
 	 */
 	public int getStoppedOnFloor() {
 		return stoppedOnFloor;
 	}
 
 	/**
+	 * Sets the stopped on floor variable
 	 * 
 	 * @param stoppedOnFloor
 	 */
@@ -149,15 +155,14 @@ public class Monitora {
 	}
 
 	/**
-	 * 
+	 * Clears the list 
 	 */
 	public void clearList() {
-
 		list.clear();
-
 	}
 
 	/**
+	 * Sets the stopped button variable
 	 * 
 	 * @param stopButtonPressed
 	 */
@@ -166,8 +171,9 @@ public class Monitora {
 	}
 
 	/**
+	 * Checks if the stopped button is pressed
 	 * 
-	 * @return
+	 * @return boolean True is the stop button has been pressed
 	 */
 	public boolean isStopButtonPressed() {
 		return stopButtonPressed;

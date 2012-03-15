@@ -17,14 +17,14 @@ public class MainController extends Thread implements ActionListener {
 	Motor motor;
 	Door door;
 	Scale scale;
-	Monitora[] monitor;
+	Monitor[] monitor;
 	Elevators elevators;
 	String rmihost, action[] = new String[3];
 	int elevatorNumber;
 	int numOfElevators;
 	double requestedFloor;
 
-	public MainController(Monitora monitor[]) {
+	public MainController(Monitor monitor[]) {
 		this.monitor = monitor;
 	}
 
@@ -49,9 +49,9 @@ public class MainController extends Thread implements ActionListener {
 	public static void main(String[] args) throws RemoteException,
 			MalformedURLException, NotBoundException, InterruptedException {
 
-		Monitora[] monitorList = new Monitora[MakeAll.getNumberOfElevators() + 1];
+		Monitor[] monitorList = new Monitor[MakeAll.getNumberOfElevators() + 1];
 		for (int i = 1; i < MakeAll.getNumberOfElevators() + 1; i++) {
-			monitorList[i] = new Monitora();
+			monitorList[i] = new Monitor();
 			new Thread(new ElevatorController(monitorList[i], i)).start();
 			Thread.sleep(10);
 		}

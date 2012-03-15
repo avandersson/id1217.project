@@ -8,15 +8,13 @@ import java.util.ArrayList;
 import elevator.rmi.*;
 
 public class ElevatorController implements ActionListener, Runnable {
-	Monitora monitor;
+	Monitor monitor;
 	Elevator elevator;
 	ArrayList<Task> list = new ArrayList<Task>();
 	int id;
 	double destinationFloor = 0, requestedFloor, time;
 
-	// boolean stopButtonPressed = false;
-
-	public ElevatorController(Monitora monitor, int id) {
+	public ElevatorController(Monitor monitor, int id) {
 		this.monitor = monitor;
 		this.id = id;
 	}
@@ -88,7 +86,6 @@ public class ElevatorController implements ActionListener, Runnable {
 					}
 					int where = (int) (elevator.whereIs() + 0.1);
 					elevator.setScalePosition(where);
-					// monitor.setStoppedOnFloor((int)elevator.whereIs());
 					if (!monitor.isStopButtonPressed()) {
 						elevator.stop();
 						elevator.open();
@@ -129,7 +126,6 @@ public class ElevatorController implements ActionListener, Runnable {
 					}
 					int where = (int) (elevator.whereIs() + 0.1);
 					elevator.setScalePosition(where);
-					// monitor.setStoppedOnFloor((int)elevator.whereIs());
 					if (!monitor.isStopButtonPressed()) {
 						elevator.stop();
 						elevator.open();

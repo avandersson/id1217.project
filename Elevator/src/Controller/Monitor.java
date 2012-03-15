@@ -3,7 +3,7 @@ package Controller;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-public class Monitora {
+public class Monitor {
 	ArrayList<Task> list = new ArrayList<Task>();
 	private int direction = 0;
 	private int stoppedOnFloor = 0;
@@ -28,11 +28,9 @@ public class Monitora {
 						 * On the correct floor, open the doors.
 						 */
 						list.add(task);
-						// listOfTasks.add(31000.0);
 						notify();
 					}
 				} else {
-					// listOfTasks.add(number);
 					list.add(task);
 					notify();
 
@@ -47,11 +45,9 @@ public class Monitora {
 					 * On the correct floor, open the doors.
 					 */
 					list.add(task);
-					// listOfTasks.add(31000.0);
 					notify();
 				}
 			} else {
-				// listOfTasks.add(number);
 				list.add(task);
 				notify();
 
@@ -85,40 +81,52 @@ public class Monitora {
 	}
 
 	/**
+	 * Gets the first task of this elevators
 	 * 
-	 * @return The first task of this elevators ArrayList<Task>
+	 * @return task
 	 */
 	public synchronized Task getFirstTask() {
 		return list.get(0);
 	}
 
 	/**
+	 * Gets the size of the list
 	 * 
-	 * @return
+	 * @return size
 	 */
 	public synchronized int getSizeOfListOfTasks() {
 		return list.size();
 	}
 	
 	/**
+	 * Adds the task to the front of the list
 	 * 
-	 * @param task
-	 * @param position
-	 * @return
+	 * @param task The task that gets added first in the list
+	 * @param position The position of the task
+	 * @return list The new list
 	 */
 	public synchronized ArrayList<Task> addTaskFirst(Task task, int position) {
 		list.remove(position);
 		list.add(0, task);
 		return list;
 	}
-
+	
+	/**
+	 * Removes task form the list
+	 * 
+	 * @param task The task to be removed
+	 */
 	public synchronized void removeTask(Task task) {
 		list.remove(task);
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Gets the direction of the elevator
+	 * -1 = down
+	 * 0 = no direction
+	 * 1 = up
+	 *  
+	 * @return direction
 	 */
 	public synchronized int getDirection() {
 		return direction;

@@ -1,18 +1,16 @@
 package Controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+import java.rmi.*;
+import elevator.rmi.*;
 
-import elevator.rmi.Door;
-import elevator.rmi.Elevator;
-import elevator.rmi.Elevators;
-import elevator.rmi.MakeAll;
-import elevator.rmi.Motor;
-import elevator.rmi.Scale;
-
+/**
+ * Controller that handles the distribution of tasks between elevators.
+ * 
+ * @author Ivan Pedersen, Alfred Andersson
+ *
+ */
 public class MainController extends Thread implements ActionListener {
 	Motor motor;
 	Door door;

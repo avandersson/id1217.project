@@ -52,10 +52,9 @@ public class Task {
 	/**
 	 * True if the task already exists in the list given
 	 * 
-	 * @param ArrayList<Task> The ArrayList to search through
+	 * @param list The ArrayList to search through
 	 * @return boolean
 	 */
-
 	public boolean existsIn(ArrayList<Task> list) {
 
 		if(list.size() == 0){

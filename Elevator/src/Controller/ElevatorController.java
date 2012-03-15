@@ -7,6 +7,12 @@ import java.rmi.*;
 import java.util.ArrayList;
 import elevator.rmi.*;
 
+/**
+ * Controller that handles the movement of each elevator
+ * 
+ * @author Ivan Pedersen, Alfred Andersson
+ *
+ */
 public class ElevatorController implements ActionListener, Runnable {
 	Monitor monitor;
 	Elevator elevator;

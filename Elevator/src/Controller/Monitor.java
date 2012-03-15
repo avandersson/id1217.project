@@ -2,7 +2,12 @@ package Controller;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
-
+/**
+ * Monitor that handles communication between each elevator and main controller
+ * 
+ * @author Ivan Pedersen, Alfred Andersson
+ *
+ */
 public class Monitor {
 	ArrayList<Task> list = new ArrayList<Task>();
 	private int direction = 0;
@@ -138,7 +143,7 @@ public class Monitor {
 	 * 0 = no direction
 	 * 1 = up
 	 * 
-	 * @param int direction
+	 * @param direction
 	 */
 	public synchronized void setDirection(int direction) {
 		this.direction = direction;
@@ -149,7 +154,7 @@ public class Monitor {
 	 * 
 	 * @return -1 if the elevator is moving
 	 */
-	public int getStoppedOnFloor() {
+	public synchronized int getStoppedOnFloor() {
 		return stoppedOnFloor;
 	}
 
@@ -158,14 +163,14 @@ public class Monitor {
 	 * 
 	 * @param stoppedOnFloor
 	 */
-	public void setStoppedOnFloor(int stoppedOnFloor) {
+	public synchronized void setStoppedOnFloor(int stoppedOnFloor) {
 		this.stoppedOnFloor = stoppedOnFloor;
 	}
 
 	/**
 	 * Clears the list 
 	 */
-	public void clearList() {
+	public synchronized void clearList() {
 		list.clear();
 	}
 
@@ -174,7 +179,7 @@ public class Monitor {
 	 * 
 	 * @param stopButtonPressed
 	 */
-	public void setStopButtonPressed(boolean stopButtonPressed) {
+	public synchronized void setStopButtonPressed(boolean stopButtonPressed) {
 		this.stopButtonPressed = stopButtonPressed;
 	}
 
@@ -183,7 +188,7 @@ public class Monitor {
 	 * 
 	 * @return boolean True is the stop button has been pressed
 	 */
-	public boolean isStopButtonPressed() {
+	public synchronized boolean isStopButtonPressed() {
 		return stopButtonPressed;
 	}
 

@@ -2,7 +2,6 @@ package Controller;
 
 import java.util.ArrayList;
 
-
 /**
  * Task object. Contains the necessary information about each task
  * 
@@ -13,18 +12,16 @@ public class Task {
 	private String command;
 	private int floor, direction;
 
-	public Task(String command, int floor, int direction){
+	public Task(String command, int floor, int direction) {
 		this.command = command;
 		this.floor = floor;
 		this.direction = direction;
 	}
 
-
-
 	/**
 	 * Gets the command of this task
 	 * 
-	 * @return String command 
+	 * @return String command
 	 */
 
 	public String getCommand() {
@@ -34,7 +31,7 @@ public class Task {
 	/**
 	 * Gets the floor requested by this task
 	 * 
-	 * @return int floor 
+	 * @return int floor
 	 */
 	public int getFloor() {
 		return floor;
@@ -43,25 +40,27 @@ public class Task {
 	/**
 	 * The direction of this task
 	 * 
-	 * @return int Direction 
+	 * @return int Direction
 	 */
 	public int getDirection() {
 		return direction;
 	}
-	
+
 	/**
 	 * True if the task already exists in the list given
 	 * 
-	 * @param list The ArrayList to search through
+	 * @param list
+	 *            The ArrayList to search through
 	 * @return boolean
 	 */
 	public boolean existsIn(ArrayList<Task> list) {
 
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return false;
-		}else{
-			for(int i = 0; i < list.size(); i++){
-				if(list.get(i).getFloor() == floor && list.get(i).getDirection() == direction){
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getFloor() == floor
+						&& list.get(i).getDirection() == direction) {
 					return true;
 				}
 			}

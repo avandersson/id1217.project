@@ -9,7 +9,7 @@ import elevator.rmi.*;
  * Controller that handles the distribution of tasks between elevators.
  * 
  * @author Ivan Pedersen, Alfred Andersson
- *
+ * 
  */
 public class MainController extends Thread implements ActionListener {
 	Motor motor;
@@ -72,21 +72,20 @@ public class MainController extends Thread implements ActionListener {
 
 		System.out.println("M command=" + e.getActionCommand());
 		try {
-			
-			for (int i = 1; i < numOfElevators +1; i++) {
-				
-				if(task.existsIn(monitor[i].list)){
+
+			for (int i = 1; i < numOfElevators + 1; i++) {
+
+				if (task.existsIn(monitor[i].list)) {
 					done = true;
 				}
-				
+
 			}
-			
+
 			if (direction == 1) {
 				/*
 				 * up action requested
 				 */
 
-				
 				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
 					if (monitor[i].getStoppedOnFloor() == floor) {
 						/*
@@ -99,7 +98,8 @@ public class MainController extends Thread implements ActionListener {
 				}
 				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
 					/*
-					 * find a elevator on close floor that's going in the right direction
+					 * find a elevator on close floor that's going in the right
+					 * direction
 					 */
 					if (monitor[i].getDirection() == 1
 							&& elevators.whereIs(i) < floor
@@ -113,12 +113,13 @@ public class MainController extends Thread implements ActionListener {
 					/*
 					 * finds stationary elevator on above or below floor
 					 */
-					if ((task.getFloor() != 0 && monitor[i].getStoppedOnFloor() == floor - 1) || 
-							(task.getFloor() != MakeAll.getNumberOfFloors() && monitor[i].getStoppedOnFloor() == floor + 1)) {
+					if ((task.getFloor() != 0 && monitor[i].getStoppedOnFloor() == floor - 1)
+							|| (task.getFloor() != MakeAll.getNumberOfFloors() && monitor[i]
+									.getStoppedOnFloor() == floor + 1)) {
 						monitor[i].setTask(task);
 						done = true;
 					}
-					
+
 				}
 				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
 					/*
@@ -136,14 +137,15 @@ public class MainController extends Thread implements ActionListener {
 					int index = 1;
 					for (int i = 2; i < numOfElevators + 1 && !done; i++) {
 						if (monitor[i].getSizeOfListOfTasks() < smallestListSize) {
-							smallestListSize = monitor[i].getSizeOfListOfTasks();
+							smallestListSize = monitor[i]
+									.getSizeOfListOfTasks();
 							index = i;
 						}
 					}
 					monitor[index].setTask(task);
 					done = true;
 				}
-			
+
 			} else {
 				/*
 				 * down action requested
@@ -160,7 +162,8 @@ public class MainController extends Thread implements ActionListener {
 				}
 				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
 					/*
-					 * find a elevator on close floor that's going in the right direction
+					 * find a elevator on close floor that's going in the right
+					 * direction
 					 */
 					if (monitor[i].getDirection() == -1
 							&& elevators.whereIs(i) > floor
@@ -174,12 +177,13 @@ public class MainController extends Thread implements ActionListener {
 					/*
 					 * finds stationary elevator on above or below floor
 					 */
-					if ((task.getFloor() != 0 &&  monitor[i].getStoppedOnFloor() == floor - 1) || 
-							(task.getFloor() != MakeAll.getNumberOfFloors() && monitor[i].getStoppedOnFloor() == floor + 1)) {
+					if ((task.getFloor() != 0 && monitor[i].getStoppedOnFloor() == floor - 1)
+							|| (task.getFloor() != MakeAll.getNumberOfFloors() && monitor[i]
+									.getStoppedOnFloor() == floor + 1)) {
 						monitor[i].setTask(task);
 						done = true;
 					}
-					
+
 				}
 				for (int i = 1; i < numOfElevators + 1 && !done; i++) {
 					/*
@@ -197,7 +201,8 @@ public class MainController extends Thread implements ActionListener {
 					int index = 1;
 					for (int i = 2; i < numOfElevators + 1 && !done; i++) {
 						if (monitor[i].getSizeOfListOfTasks() < smallestListSize) {
-							smallestListSize = monitor[i].getSizeOfListOfTasks();
+							smallestListSize = monitor[i]
+									.getSizeOfListOfTasks();
 							index = i;
 						}
 					}

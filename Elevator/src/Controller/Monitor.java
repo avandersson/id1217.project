@@ -2,11 +2,12 @@ package Controller;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
+
 /**
  * Monitor that handles communication between each elevator and main controller
  * 
  * @author Ivan Pedersen, Alfred Andersson
- *
+ * 
  */
 public class Monitor {
 	ArrayList<Task> list = new ArrayList<Task>();
@@ -60,7 +61,7 @@ public class Monitor {
 		}
 
 	}
-	
+
 	/**
 	 * Gets a list of tasks that this elevator has
 	 * 
@@ -102,12 +103,14 @@ public class Monitor {
 	public synchronized int getSizeOfListOfTasks() {
 		return list.size();
 	}
-	
+
 	/**
 	 * Adds the task to the front of the list
 	 * 
-	 * @param task The task that gets added first in the list
-	 * @param position The position of the task
+	 * @param task
+	 *            The task that gets added first in the list
+	 * @param position
+	 *            The position of the task
 	 * @return list The new list
 	 */
 	public synchronized ArrayList<Task> addTaskFirst(Task task, int position) {
@@ -115,33 +118,28 @@ public class Monitor {
 		list.add(0, task);
 		return list;
 	}
-	
+
 	/**
 	 * Removes task form the list
 	 * 
-	 * @param task The task to be removed
+	 * @param task
+	 *            The task to be removed
 	 */
 	public synchronized void removeTask(Task task) {
 		list.remove(task);
 	}
 
 	/**
-	 * Gets the direction of the elevator
-	 * -1 = down
-	 * 0 = no direction
-	 * 1 = up
-	 *  
+	 * Gets the direction of the elevator -1 = down 0 = no direction 1 = up
+	 * 
 	 * @return direction
 	 */
 	public synchronized int getDirection() {
 		return direction;
 	}
-	
+
 	/**
-	 * Sets the direction of this elevator
-	 * -1 = down
-	 * 0 = no direction
-	 * 1 = up
+	 * Sets the direction of this elevator -1 = down 0 = no direction 1 = up
 	 * 
 	 * @param direction
 	 */
@@ -168,7 +166,7 @@ public class Monitor {
 	}
 
 	/**
-	 * Clears the list 
+	 * Clears the list
 	 */
 	public synchronized void clearList() {
 		list.clear();
